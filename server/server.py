@@ -1,58 +1,73 @@
 #!/usr/bin/python2
-import flask
+from flask import request, json, send_from_directory, Flask, abort, make_response
 import ujson
 import md5
+import boto3
 
 def makeToken(name):
     m = md5.new()
     m.update(name)
     return m.digest().encode('hex')
 
-users = {}
-app = flask.Flask(__name__,static_folder='./static')
+loggedIn = {} 
+app = Flask(__name__,static_folder='./static')
 
 users = None
 data = None
-policy = None
+policies = None
 
-with(open('../tables/users.json') as j):
-    users = ujson.loads(j.read())['users']
+dynamodb = boto3.resource('dynamodb', 'us-east-2')
 
-with(open('../tables/data.json') as j):
-    data = ujson.loads(j.read())
 
-with(open('../tables/policy.json') as j):
-    policy = ujson.loads(j.read())
+# with open('../tables/users.json') as j:
+#     users = ujson.loads(j.read())['users']
+
+# with(open('../tables/data.json') as j):
+#     data = ujson.loads(j.read())
+
+# with(open('../tables/policy.json') as j):
+#     policies = ujson.loads(j.read())
 
 @app.route('/<path:path>')
 def get_file(path):
-    return send_from_directory("./",path)
+    return send_from_directory("./static/",path)
 
-@app.route('/login')
+@app.route('/login', methods=['POST','GET'])
 def login():
     try:
         name = request.json["username"]
         user = None
         for u in users:
-            if u['username'] is name:
+            print str(u['username'])
+            if u['username'] == name:
                 user = u
                 break
         if user is None:
-            flask.abort(401)
-        users[makeToken(u['username'])] = u['UUID']
-        return users[u['UUID']]
+            print 'nouser'
+            abort(401)
+        loggedIn[user['UUID']] = makeToken(user['username'])
+        resp = make_response("<p>Good</p>",200)
+        resp.set_cookie('userID',loggedIn[user['UUID']])
+        return resp
     except KeyError as e:
-        flask.abort(401)
+        print 'badkey'
+        abort(401)
+    except TypeError as e:
+        print 'badtype'
+        abort(401)
 
-@app.route('/read')
-def santaRead():
-    try:
-        RID = request.json["RID"]
-        UUID = request.json["UUID"]
-        user = users[RID]
+# @app.route('/read')
+# def santaRead():
+#     try:
+#         returned = None
+#         RID = request.cookies.get('userID')
+#         UUID = request.json["UUID"]
+#         user = loggedIn[RID]
+#         policy = policies[user['role']]
+#         patient = data[UUID]
         
-    except KeyError as e:
-        flask.abort(401)
+#     except KeyError as e:
+#         abort(401)
 
 
-@app.route('/write')
+# @app.route('/write')
