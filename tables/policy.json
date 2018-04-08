@@ -1,0 +1,70 @@
+{
+    "doctor_role": [
+    {
+        "level": "confidential",
+        "category": "medical"
+    },
+    {
+        "level": "confidential",
+        "category": "treatment"
+    },
+    {
+        "level": "confidential",
+        "category": "pii"
+    }
+    ],
+    "nurse_role": [
+    {
+        "level": "confidential",
+        "category": "medical"
+    },
+    {
+        "level": "confidential",
+        "category": "pii"
+    }
+    ],
+    "pharmacist_role": [
+    {
+        "level": "confidential",
+        "category": "medical"
+    },
+    {
+        "level": "confidential",
+        "category": "pii"
+    }
+    ],
+    "researcher_role": [
+    {
+        "level": "confidential",
+        "category": "medical"
+    }
+    ],
+    "billing_role": [
+    {
+        "level": "confidential",
+        "category": "treatment"
+    },
+    {
+        "level": "confidential",
+        "category": "pii"
+    },
+    {
+        "level": "confidential",
+        "category": "charges"
+    }
+    ],
+    "intake_person_role":  [
+    {
+        "level": "unclassified",
+        "category": "medical"
+    },
+    {
+        "level": "unclassified",
+        "category": "pii"
+    },
+    {
+        "level": "confidential",
+        "category": "charges"
+    }
+    ]
+}
