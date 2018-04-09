@@ -76,9 +76,9 @@ def get_file(path):
     return send_from_directory("../web_services",path)
 
 @crossdomain(origin='*')
-@app.route('/api/login', methods=['POST','GET','OPTIONS'])
+@app.route('/api/login', methods=['POST','GET','OPTIONS','HEAD'])
 def login():
-    try:
+    try: 
         name = request.json["username"]
         user = None
         for u in users:
@@ -92,6 +92,7 @@ def login():
         loggedIn[makeToken(user['username'])] = user['UUID']
         resp = make_response("<p>Good</p>",200)
         resp.set_cookie('userID',loggedIn[user['UUID']])
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     except KeyError as e:
         print 'badkey'
