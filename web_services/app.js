@@ -7,7 +7,6 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
-const BASE_URL = 'https://portal.ufsit.org';
 const PORT = process.env.PORT || 8080;
 const REALM = process.env.NODE_ENV || 'development';
 
@@ -55,5 +54,5 @@ app.listen(PORT, function() {
 		url = BASE_URL + '/';
 	}
 
-	console.log('[REALM ' + REALM + '] UFSIT Portal now accepting requests at ' + url);
+	console.log('[REALM ' + REALM + '] Portal now accepting requests at ' + url);
 });

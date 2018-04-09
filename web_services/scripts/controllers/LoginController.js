@@ -30,7 +30,7 @@
 					(null != $scope.formData.email) &&
 					(null != $scope.formData.password)) {
 				/* Make a request to the services to log in */
-				$http.post('/api/user/login', $scope.formData)
+				$http.post('localhost:5000/api/user/login', $scope.formData)
 					.success(function(data, status, headers, config) {
 						$location.path('/home');
 					})
@@ -51,7 +51,7 @@
 		};
 
 		function validate_session(callback) {
-			$http.get('/api/session/validate', $scope.formData)
+			$http.get('localhost:5000/api/session/validate', $scope.formData)
 				.success(function(data, status, headers, config) {
 					console.log(status);
 					console.log(data);
