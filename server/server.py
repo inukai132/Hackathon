@@ -23,7 +23,7 @@ policies = None
 key = ""
 skey = ""
 with open("../../accessKeys.csv") as kf:
-    key,skey = kf.read().split('/r/n')[1].split(',')
+    key,skey = kf.read().split('\r\n')[1].split(',')
 
 
 dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_key_id=skey)
