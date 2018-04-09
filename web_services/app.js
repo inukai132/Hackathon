@@ -3,6 +3,8 @@
 // Enable app-relative includes (https://gist.github.com/branneman/8048520)
 // Note: use require.main.require('file/path') for app-relative includes
 
+const https = require('https');
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
@@ -43,6 +45,18 @@ app.use(express.static('html'));
 app.use(express.static('routes'));
 app.use(express.static('services'));
 app.use(express.static('node_modules'));
+
+app.post('/api/user/login/',(req,res)=>{
+	// res.status(200).json({shit:"good"});
+	let url = 'localhost:5000/api/user/login/';
+	request.get(url, (error, response, body) => {
+		if(error){
+			res.status(500).send();
+		} else {
+			res.status(200).json(JSON.parse(body));
+		}
+	});
+});
 
 // Tells the terminal the node has been created at a given port number
 app.listen(PORT, function() {
