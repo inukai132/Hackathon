@@ -12,9 +12,10 @@
 			if (!is_logged_in) {
 				$location.path('/login');
 			} else { // Otherwise, render the page normally
-				$scope.show_name = true;
-				$scope.full_name = user_data.name;
-				$scope.email_addr = user_data.email;
+				console.log($user_data);
+				// $scope.show_name = true;
+				// $scope.full_name = user_data.name;
+				// $scope.email_addr = user_data.email;
 			}
 		});
 

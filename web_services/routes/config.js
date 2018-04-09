@@ -18,11 +18,6 @@
 			controller: 'LoginController',
 			controllerAs: 'main',
 		})
-		.when('/register', {
-			templateUrl: 'register.html',
-			controller: 'RegisterController',
-			controllerAs: 'main',
-		})
 		.when('/home', {
 			templateUrl: 'views/home.html',
 			controller: 'homeController',
