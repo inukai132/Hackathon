@@ -80,6 +80,7 @@ def get_file(path):
 @crossdomain(origin='*')
 @app.route('/api/user/login')
 def login():
+    print "Login hit\n"
     try: 
         name = request.json["username"]
         user = None
