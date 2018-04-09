@@ -8,6 +8,7 @@ import logging
 import datetime
 from functools import update_wrapper
 from datetime import timedelta
+from rm/reference_monitor import ReferenceMonitor
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
@@ -59,8 +60,8 @@ loggedIn = {}
 app = Flask(__name__,static_folder='../web_services/')
 CORS(app)
 
-time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
-# logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
+time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M")
+logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
 
 users = None
 data = None
@@ -72,6 +73,8 @@ with open("../../accessKeys.csv") as kf:
 
 
 dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_access_key=skey)
+
+santa = ReferenceMonitor(dynamodb)
 
 @app.route('/<path:path>')
 def get_file(path):
@@ -118,6 +121,7 @@ def validate():
         return resp
     except Exception as e:
         resp = make_response("{'name':'error'}",200)
+        return resp
 
 @crossdomain(origin='*')
 @app.route('/api/read')
@@ -125,8 +129,7 @@ def santaRead():
     try:
         RID = request.cookies.get('userID')
         UUID = request.json["UUID"]
-        readFunction(RID,UUID)
-        abort(404)
+        return make_response(ujson.dumps(santa.authorized(RID,UUID)),200)
     except KeyError as e:
         abort(401)
 
