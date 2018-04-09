@@ -84,17 +84,18 @@ def login():
     try: 
         name = request.json["username"]
         user = None
-        for u in users:
-            print str(u['username'])
-            if u['username'] == name:
-                user = u
-                break
-        if user is None:
-            print 'nouser'
-            abort(401)
-        loggedIn[makeToken(user['username'])] = user['UUID']
+        # for u in users:
+        #     print str(u['username'])
+        #     if u['username'] == name:
+        #         user = u
+        #         break
+        # if user is None:
+        #     print 'nouser'
+        #     abort(401)
+        # loggedIn[makeToken(user['username'])] = user['UUID']
         resp = make_response("<p>Good</p>",200)
-        resp.set_cookie('userID',loggedIn[user['UUID']])
+        # resp.set_cookie('userID',loggedIn[user['UUID']])
+        resp.set_cookie('userID',"UUID")
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     except KeyError as e:
