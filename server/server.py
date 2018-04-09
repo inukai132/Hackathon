@@ -3,6 +3,7 @@ from flask import request, json, send_from_directory, Flask, abort, make_respons
 import ujson
 import md5
 import boto3
+import logging
 
 def makeToken(name):
     m = md5.new()
@@ -12,6 +13,8 @@ def makeToken(name):
 loggedIn = {} 
 app = Flask(__name__,static_folder='../web_services/')
 
+logging.basicConfig(filename="../server.log", level=logging.DEBUG)
+
 users = None
 data = None
 policies = None
@@ -20,36 +23,27 @@ skey = ""
 with open("../../accessKeys.csv") as kf:
     key,skey = kf.read().split('/r/n')[1].split(',')
 
+
 dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_key_id=skey)
-
-
-# with open('../tables/users.json') as j:
-#     users = ujson.loads(j.read())['users']
-
-# with(open('../tables/data.json') as j):
-#     data = ujson.loads(j.read())
-
-# with(open('../tables/policy.json') as j):
-#     policies = ujson.loads(j.read())
 
 @app.route('/<path:path>')
 def get_file(path):
     return send_from_directory("../web_services",path)
 
-@app.route('/login', methods=['POST','GET'])
+@app.route('/api/login', methods=['POST','GET'])
 def login():
     try:
         name = request.json["username"]
         user = None
         for u in users:
             print str(u['username'])
-            if u['username'] == name:
+            if u['username']dynamodb == name:
                 user = u
                 break
         if user is None:
             print 'nouser'
             abort(401)
-        loggedIn[user['UUID']] = makeToken(user['username'])
+        loggedIn[makeToken(user['username'])] = user['UUID']
         resp = make_response("<p>Good</p>",200)
         resp.set_cookie('userID',loggedIn[user['UUID']])
         return resp
@@ -60,7 +54,15 @@ def login():
         print 'badtype'
         abort(401)
 
-@app.route('/read')
+@app.route('/api/session/validate')
+def validate():
+    try:
+        uid = request.cookies.get('userID')
+        if uid is not None:
+            resp = make_response(ujson.dumps(loggedIn[uid]),200)
+            return resp
+
+@app.route('/api/read')
 def santaRead():
     try:
         RID = request.cookies.get('userID')
@@ -71,6 +73,6 @@ def santaRead():
         abort(401)
 
 
-@app.route('/write')
+@app.route('/api/write')
 def santaWrite():
     abort(404)
