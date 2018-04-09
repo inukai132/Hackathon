@@ -31,21 +31,8 @@ dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_se
 @app.route('/<path:path>')
 def get_file(path):
     return send_from_directory("../web_services",path)
-@app.route('/controllers/<path:path>')
-def get_ctrl(path):
-    return send_from_directory("../web_services/scripts/controllers",path)
-@app.route('/config.js')
-def get_cfg(path):
-    return send_from_directory("../web_services/routes/config.js")
-@app.route('/Validate.js')
-def get_val(path):
-    return send_from_directory("../web_services/services/Validate.js")
-# @app.route('/<path:path>')
-# def get_file(path):
-#     return send_from_directory("../web_services",path)
 
 @app.route('/api/login', methods=['POST','GET'])
-
 def login():
     try:
         name = request.json["username"]
@@ -76,7 +63,8 @@ def validate():
         if uid is not None:
             # resp = make_response(ujson.dumps(loggedIn[uid]),200)
             resp = make_response("{'name':'Bob Stevens'}",200)
-            return resp
+        resp = make_response("{'name':'Bob Stevens'}",200)
+        return resp
     except Exception as e:
         abort(401)
 
