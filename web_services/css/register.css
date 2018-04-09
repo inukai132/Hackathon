@@ -2,21 +2,19 @@ input.ng-invalid.ng-dirty {background-color: #FF554F}
 input.ng-valid.ng-dirty {background-color: #68FF9D}
 
 .main_header{
-	font-size: 32px;
-	font-family: 'Share Tech Mono', monospace;
+	font-size: 60px;
+	font-family: 'Assistant', monospace;
 	/*text-shadow: h-shadow v-shadow blur-radius color|none|initial|inherit;*/
-	text-shadow: 1px 1px 1px #0CE88B;
+	text-shadow: 1px 1px 1px #2672ec;
 }
 
 .input-label{
-	font-size: 14px;
-	font-family: 'Share Tech Mono', monospace;
-}
+	font-size: 18pt;
+	font-family: 'Assistant', monospace;	}
 
-.notification_panel{
-	font-size: 14px;
-	font-family: 'Share Tech Mono', monospace;
-}
+	.input-label{
+		font-size: 18pt;
+		font-family: 'Assistant', monospace;	}
 
 form .form-hint {
 	margin-top: 5px;
