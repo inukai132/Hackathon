@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 from flask import request, json, send_from_directory, Flask, abort, make_response, current_app
+from flask_cors import CORS
 import ujson
 import md5
 import boto3
@@ -56,6 +57,7 @@ def makeToken(name):
 
 loggedIn = {} 
 app = Flask(__name__,static_folder='../web_services/')
+CORS(app)
 
 time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
 # logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
