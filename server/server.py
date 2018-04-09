@@ -45,6 +45,7 @@ def get_file(path):
     return send_from_directory("../web_services",path)
 
 @app.route('/api/login', methods=['POST','GET'])
+
 def login():
     try:
         name = request.json["username"]
