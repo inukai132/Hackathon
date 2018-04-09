@@ -9,10 +9,10 @@
 
 	function configure($routeProvider, $translateProvider) {
 		$routeProvider
-			.when('/', {
-				templateUrl: 'login.html',
-				controller: 'LoginController',
-			})
+		.when('/', {
+			templateUrl: 'login.html',
+			controller: 'LoginController',
+		})
 		.when('/login', {
 			templateUrl: 'login.html',
 			controller: 'LoginController',
@@ -23,21 +23,11 @@
 			controller: 'RegisterController',
 			controllerAs: 'main',
 		})
-		.when('/admin', {
-			templateUrl: 'admin.html',
-			controller: 'AdminController',
-			controllerAs: 'main',
-		})
 		.when('/home', {
 			templateUrl: 'views/home.html',
 			controller: 'homeController',
 			controllerAs: 'home',
 		})
-		//	.when("/meeting_signin", {
-		//		templateUrl: "views/meeting_signin.html",
-		//		controller: "meetingController",
-		//		controllerAs: "meeting"
-		//	})
 		.otherwise({redirectTo: '/'});
 
 		console.log(navigator.language);
