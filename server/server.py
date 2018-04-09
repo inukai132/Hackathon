@@ -32,17 +32,17 @@ dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_se
 def get_file(path):
     return send_from_directory("../web_services",path)
 @app.route('/controllers/<path:path>')
-def get_file(path):
+def get_ctrl(path):
     return send_from_directory("../web_services/scripts/controllers",path)
 @app.route('/config.js')
-def get_file(path):
+def get_cfg(path):
     return send_from_directory("../web_services/routes/config.js")
 @app.route('/Validate.js')
-def get_file(path):
+def get_val(path):
     return send_from_directory("../web_services/services/Validate.js")
-@app.route('/<path:path>')
-def get_file(path):
-    return send_from_directory("../web_services",path)
+# @app.route('/<path:path>')
+# def get_file(path):
+#     return send_from_directory("../web_services",path)
 
 @app.route('/api/login', methods=['POST','GET'])
 
