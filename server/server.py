@@ -8,6 +8,7 @@ import logging
 import datetime
 from functools import update_wrapper
 from datetime import timedelta
+from rm/reference_monitor import ReferenceMonitor
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
@@ -73,6 +74,8 @@ with open("../../accessKeys.csv") as kf:
 
 dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_access_key=skey)
 
+santa = ReferenceMonitor(dynamodb)
+
 @app.route('/<path:path>')
 def get_file(path):
     return send_from_directory("../web_services",path)
@@ -118,6 +121,7 @@ def validate():
         return resp
     except Exception as e:
         resp = make_response("{'name':'error'}",200)
+        return resp
 
 @crossdomain(origin='*')
 @app.route('/api/read')
@@ -125,8 +129,7 @@ def santaRead():
     try:
         RID = request.cookies.get('userID')
         UUID = request.json["UUID"]
-        readFunction(RID,UUID)
-        abort(404)
+        return make_response(ujson.dumps(santa.authorized(RID,UUID)),200)
     except KeyError as e:
         abort(401)
 
