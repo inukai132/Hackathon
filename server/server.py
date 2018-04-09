@@ -15,8 +15,12 @@ app = Flask(__name__,static_folder='./static')
 users = None
 data = None
 policies = None
+key = ""
+skey = ""
+with open("../../accessKeys.csv") as kf:
+    key,skey = kf.read().split('\r\n')[1].split(',')
 
-dynamodb = boto3.resource('dynamodb', 'us-east-2')
+dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_key_id=skey)
 
 
 # with open('../tables/users.json') as j:
@@ -30,7 +34,7 @@ dynamodb = boto3.resource('dynamodb', 'us-east-2')
 
 @app.route('/<path:path>')
 def get_file(path):
-    return send_from_directory("./static/",path)
+    return send_from_directory("../web_services",path)
 
 @app.route('/login', methods=['POST','GET'])
 def login():
@@ -56,18 +60,15 @@ def login():
         print 'badtype'
         abort(401)
 
-# @app.route('/read')
-# def santaRead():
-#     try:
-#         returned = None
-#         RID = request.cookies.get('userID')
-#         UUID = request.json["UUID"]
-#         user = loggedIn[RID]
-#         policy = policies[user['role']]
-#         patient = data[UUID]
-        
-#     except KeyError as e:
-#         abort(401)
+@app.route('/read')
+def santaRead():
+    try:
+        RID = request.cookies.get('userID')
+        UUID = request.json["UUID"]
+        readFunction(RID,UUID)
+        return 
+    except KeyError as e:
+        abort(401)
 
 
-# @app.route('/write')
+@app.route('/write')
