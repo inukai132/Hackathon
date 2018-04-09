@@ -59,8 +59,8 @@ loggedIn = {}
 app = Flask(__name__,static_folder='../web_services/')
 CORS(app)
 
-time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
-# logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
+time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M")
+logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
 
 users = None
 data = None
