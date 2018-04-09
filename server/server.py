@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 from flask import request, json, send_from_directory, Flask, abort, make_response, current_app
+from flask_cors import CORS
 import ujson
 import md5
 import boto3
@@ -56,6 +57,7 @@ def makeToken(name):
 
 loggedIn = {} 
 app = Flask(__name__,static_folder='../web_services/')
+CORS(app)
 
 time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
 # logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
@@ -76,22 +78,25 @@ def get_file(path):
     return send_from_directory("../web_services",path)
 
 @crossdomain(origin='*')
-@app.route('/api/login', methods=['POST','GET'])
+@app.route('/api/user/login')
 def login():
-    try:
+    print "Login hit\n"
+    try: 
         name = request.json["username"]
         user = None
-        for u in users:
-            print str(u['username'])
-            if u['username'] == name:
-                user = u
-                break
-        if user is None:
-            print 'nouser'
-            abort(401)
-        loggedIn[makeToken(user['username'])] = user['UUID']
+        # for u in users:
+        #     print str(u['username'])
+        #     if u['username'] == name:
+        #         user = u
+        #         break
+        # if user is None:
+        #     print 'nouser'
+        #     abort(401)
+        # loggedIn[makeToken(user['username'])] = user['UUID']
         resp = make_response("<p>Good</p>",200)
-        resp.set_cookie('userID',loggedIn[user['UUID']])
+        # resp.set_cookie('userID',loggedIn[user['UUID']])
+        resp.set_cookie('userID',"UUID")
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     except KeyError as e:
         print 'badkey'
