@@ -1,0 +1,6 @@
+GENERAL_INFO = ["name", "phone_num", "address", "dob"]
+CONFIDENTIAL_MEDICAL_HISTORY = ["medicalhistory"]
+UNCLASSIFIED_MEDICAL_HISTORY = ["allergy"]
+PATIENT_BILLING_INFO = ["credit_card_number", "insurance_id", "ssn"]
+PATIENT_BILL = ["price"]
+TREATMENT_SUMMARY = ['medicines', "operations"]
