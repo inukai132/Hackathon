@@ -26,7 +26,7 @@ with open("../../accessKeys.csv") as kf:
     key,skey = kf.read().split('\r\n')[1].split(',')
 
 
-dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_key_id=skey)
+dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_access_key=skey)
 
 @app.route('/<path:path>')
 def get_file(path):
@@ -39,7 +39,7 @@ def login():
         user = None
         for u in users:
             print str(u['username'])
-            if u['username']dynamodb == name:
+            if u['username'] == name:
                 user = u
                 break
         if user is None:
