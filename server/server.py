@@ -3,6 +3,8 @@ from flask import request, json, send_from_directory, Flask, abort, make_respons
 import ujson
 import md5
 import boto3
+import logging
+import datetime
 
 def makeToken(name):
     m = md5.new()
@@ -10,29 +12,40 @@ def makeToken(name):
     return m.digest().encode('hex')
 
 loggedIn = {} 
-app = Flask(__name__,static_folder='./static')
+app = Flask(__name__,static_folder='../web_services/')
+
+time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
+logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
 
 users = None
 data = None
 policies = None
+key = ""
+skey = ""
+with open("../../accessKeys.csv") as kf:
+    key,skey = kf.read().split('\r\n')[1].split(',')
 
-dynamodb = boto3.resource('dynamodb', 'us-east-2')
 
-
-# with open('../tables/users.json') as j:
-#     users = ujson.loads(j.read())['users']
-
-# with(open('../tables/data.json') as j):
-#     data = ujson.loads(j.read())
-
-# with(open('../tables/policy.json') as j):
-#     policies = ujson.loads(j.read())
+dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_access_key=skey)
 
 @app.route('/<path:path>')
 def get_file(path):
-    return send_from_directory("./static/",path)
+    return send_from_directory("../web_services",path)
+@app.route('/controllers/<path:path>')
+def get_ctrl(path):
+    return send_from_directory("../web_services/scripts/controllers",path)
+@app.route('/config.js')
+def get_cfg(path):
+    return send_from_directory("../web_services/routes/config.js")
+@app.route('/Validate.js')
+def get_val(path):
+    return send_from_directory("../web_services/services/Validate.js")
+# @app.route('/<path:path>')
+# def get_file(path):
+#     return send_from_directory("../web_services",path)
 
-@app.route('/login', methods=['POST','GET'])
+@app.route('/api/login', methods=['POST','GET'])
+
 def login():
     try:
         name = request.json["username"]
@@ -45,7 +58,7 @@ def login():
         if user is None:
             print 'nouser'
             abort(401)
-        loggedIn[user['UUID']] = makeToken(user['username'])
+        loggedIn[makeToken(user['username'])] = user['UUID']
         resp = make_response("<p>Good</p>",200)
         resp.set_cookie('userID',loggedIn[user['UUID']])
         return resp
@@ -56,18 +69,28 @@ def login():
         print 'badtype'
         abort(401)
 
-# @app.route('/read')
-# def santaRead():
-#     try:
-#         returned = None
-#         RID = request.cookies.get('userID')
-#         UUID = request.json["UUID"]
-#         user = loggedIn[RID]
-#         policy = policies[user['role']]
-#         patient = data[UUID]
-        
-#     except KeyError as e:
-#         abort(401)
+@app.route('/api/session/validate')
+def validate():
+    try:
+        uid = request.cookies.get('userID')
+        if uid is not None:
+            # resp = make_response(ujson.dumps(loggedIn[uid]),200)
+            resp = make_response("{'name':'Bob Stevens'}",200)
+            return resp
+    except Exception as e:
+        abort(401)
+
+@app.route('/api/read')
+def santaRead():
+    try:
+        RID = request.cookies.get('userID')
+        UUID = request.json["UUID"]
+        readFunction(RID,UUID)
+        abort(404)
+    except KeyError as e:
+        abort(401)
 
 
-# @app.route('/write')
+@app.route('/api/write')
+def santaWrite():
+    abort(404)
