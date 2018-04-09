@@ -58,7 +58,7 @@ loggedIn = {}
 app = Flask(__name__,static_folder='../web_services/')
 
 time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
-logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
+# logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
 
 users = None
 data = None
