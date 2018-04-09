@@ -3,40 +3,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<style>
+	<style>
 	body {
-	  font-family: 'VT323', monospace;
+		font-family: 'Assistant';
 
-	  font-size: 16px;
-	  line-height: 1.5em;
-	  font-weight: 400;
+		font-size: 16px;
+		line-height: 1.5em;
+		font-weight: 400;
 	}
 
 	p, span, a, ul, li, button {
-	  font-family: inherit;
-	  font-size: inherit;
-	  font-weight: inherit;
-	  line-height: inherit;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
 	}
 
 	strong {
-	  font-weight: 600;
+		font-weight: 600;
 	}
 
 	h1, h3, h4, h5, h6 {
-	  font-family: 'VT323', monospace;
-	  line-height: 1.0em;
-	  font-weight: 300;
+		font-family: 'Assistant';
+		line-height: 1.0em;
+		font-weight: 300;
 	}
 
 	h2 {
-	  font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-	  line-height: 1.5em;
-	  font-weight: 300;
+		font-family: "Open Sans", "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+		line-height: 1.5em;
+		font-weight: 300;
 	}
 
 	strong {
-	  font-weight: 400;
+		font-weight: 400;
 	}
 
 	.tile{
@@ -45,59 +45,11 @@
 </style>
 </head>
 <body>
-
-<div class="container-fluid text-center">
-	   <div class="col-md-12">
-		  	<div class="container">
-				<h2 ng-show="show_name">Hello, {{full_name}}</h2>
-				<hr>
-			  <div class="row">
-			  </div>
-			  <div class="row">
-			  	<div class="col-sm-4">
-			      <div class="tile salmon" ng-click="sign_in()">
-			        <h1 class="title">Meeting Sign-in</h1>
-			        <p>Sign into meetings to get member benefits</p>
-			      </div>
-			    </div>
-			   	<div class="col-sm-4">
-			      <div class="tile blueGray" ng-click="redirect_lecture_content()">
-			        <h1 class="title">Lecture and Exercises</h1>
-			        <p>Checkout old lectures and hands-on exercises</p>
-			      </div>
-			    </div> 
-				<div class="col-sm-4">
-			      <div class="tile red" ng-click="redirect_events_news()">
-			        <h1 class="title">Events and News</h1>
-			        <p>Learn about Meetings, Competitions, and Conferences</p>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="row">
-			    <div class="col-sm-4">
-			      <div class="tile green" ng-click="redirect_update_resume()">
-			        <h1 class="title">Update Resume</h1>
-			        <p>Update/Upload you resume for companies</p>
-			      </div>
-			    </div>
-			    <div class="col-sm-4">
-			      <div class="tile blue disabled"><!--disabled-->
-			        <h1 class="title">CTF Practice Challenges</h1>
-			        <p>Practice CTF challenges and view solutions</p>
-			      </div>
-			    </div>
-				<div class="col-sm-4">
-			      <div class="tile orange disabled"><!--disabled-->
-			        <h1 class="title">Submit Writeups</h1>
-			        <p>Submit writeups to up your rank</p>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-		</div>
+	<div class="container-fluid text-center">
+		
 	</div>
 	<footer class="container-fluid text-center">
-	  <button type="button" name="button" class="btn btn-danger" ng-click="log_out()">Log Out</button>
-  </footer>
+		<button type="button" name="button" class="btn btn-danger" ng-click="log_out()">Log Out</button>
+	</footer>
 </body>
 </html>

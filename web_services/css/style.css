@@ -1,5 +1,6 @@
 /*Fonts import*/
-@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono|VT323');
+/* @import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono|VT323'); */
+@import url('https://fonts.googleapis.com/css?family=Assistant:200');
 .tile {
   width: 100%;
   display: inline-block;
@@ -70,13 +71,18 @@
 	color: white;
 	background-color: #007cbf;
 	/*font-family: Georgia;*/
-	font-family: 'VT323', monospace;
+	font-family: 'Assistant', monospace;
 
 	font-size: 50px;
 	position: relative;
 	bottom: -6px;
 	right: 4px;
 }
+
+small{
+		font-size: 20pt;
+}
+
 #email{
 	position: relative;
 	right: 13%;
