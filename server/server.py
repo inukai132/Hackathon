@@ -112,7 +112,7 @@ def validate():
         resp = make_response("{'name':'Bob Stevens'}",200)
         return resp
     except Exception as e:
-        abort(401)
+        resp = make_response("{'name':'error'}",200)
 
 @crossdomain(origin='*')
 @app.route('/api/read')
