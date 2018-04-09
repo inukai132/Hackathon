@@ -76,7 +76,7 @@ def get_file(path):
     return send_from_directory("../web_services",path)
 
 @crossdomain(origin='*')
-@app.route('/api/login', methods=['POST','GET'])
+@app.route('/api/login', methods=['POST','GET','OPTIONS'])
 def login():
     try:
         name = request.json["username"]
