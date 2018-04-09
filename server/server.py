@@ -4,6 +4,7 @@ import ujson
 import md5
 import boto3
 import logging
+import datetime
 
 def makeToken(name):
     m = md5.new()
@@ -13,7 +14,8 @@ def makeToken(name):
 loggedIn = {} 
 app = Flask(__name__,static_folder='../web_services/')
 
-logging.basicConfig(filename="../server.log", level=logging.DEBUG)
+time = datetime.datetime.now().strftime("%Y-%m-%d.%H:%M:%S")
+logging.basicConfig(filename="../"+time+".log", level=logging.DEBUG)
 
 users = None
 data = None
