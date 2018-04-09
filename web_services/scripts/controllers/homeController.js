@@ -21,7 +21,7 @@
 
 
 		function validate_session(callback) {
-			$http.get('/api/session/validate')
+			$http.get('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/session/validate')
 				.success(function(data, status, headers, config) {
 					callback(true, data);
 				})
@@ -32,7 +32,7 @@
 
 		$scope.sign_in = function() {
 			console.log('clicked sign in');
-			$http.post('/api/event/sign_in')
+			$http.post('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/event/sign_in')
 				.success(function(data, status, headers, config) {
 					alert('Thanks for signing in, ' + $scope.full_name + '.');
 				})
@@ -42,7 +42,7 @@
 		};
 
 		$scope.log_out = function() {
-			$http.post('/api/session/logout');
+			$http.post('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/session/logout');
 			$location.path('/login');
 		};
 	    //redirect to sharepoint that stores lecture content

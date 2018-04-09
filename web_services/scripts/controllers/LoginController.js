@@ -30,7 +30,7 @@
 					(null != $scope.formData.email) &&
 					(null != $scope.formData.password)) {
 				/* Make a request to the services to log in */
-				$http.post('http://localhost:5000/api/user/login', $scope.formData)
+				$http.post('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/user/login', $scope.formData)
 					.success(function(data, status, headers, config) {
 						$location.path('/home');
 					})
@@ -51,7 +51,7 @@
 		};
 
 		function validate_session(callback) {
-			$http.get('http://localhost:5000/api/session/validate', $scope.formData)
+			$http.get('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/session/validate', $scope.formData)
 				.success(function(data, status, headers, config) {
 					console.log(status);
 					console.log(data);
