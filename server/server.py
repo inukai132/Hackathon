@@ -10,7 +10,7 @@ def makeToken(name):
     return m.digest().encode('hex')
 
 loggedIn = {} 
-app = Flask(__name__,static_folder='./static')
+app = Flask(__name__,static_folder='../web_services/')
 
 users = None
 data = None
@@ -18,7 +18,7 @@ policies = None
 key = ""
 skey = ""
 with open("../../accessKeys.csv") as kf:
-    key,skey = kf.read().split('\r\n')[1].split(',')
+    key,skey = kf.read().split('/r/n')[1].split(',')
 
 dynamodb = boto3.resource('dynamodb', 'us-east-2', aws_access_key_id=key, aws_secret_key_id=skey)
 
@@ -66,9 +66,11 @@ def santaRead():
         RID = request.cookies.get('userID')
         UUID = request.json["UUID"]
         readFunction(RID,UUID)
-        return 
+        abort(404)
     except KeyError as e:
         abort(401)
 
 
 @app.route('/write')
+def santaWrite():
+    abort(404)
