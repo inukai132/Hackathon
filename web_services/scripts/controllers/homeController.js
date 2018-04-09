@@ -4,7 +4,7 @@
 	let app = angular.module('myModule');
 
 	app.controller('homeController', function( $http, $log, $location, $scope, validate, $window) {
-		$scope.show_name = false;	// Don't show the person's name until it loads
+		// $scope.show_name = false;	// Don't show the person's name until it loads
 
 		// Validate the user's session
 		validate_session((is_logged_in, user_data)=>{
@@ -12,17 +12,81 @@
 			if (!is_logged_in) {
 				$location.path('/login');
 			} else { // Otherwise, render the page normally
-				console.log($user_data);
-				// $scope.show_name = true;
-				// $scope.full_name = user_data.name;
-				// $scope.email_addr = user_data.email;
+				// console.log(user_data);
+				$scope.user_data = user_data.patient_data;
+
+				$scope.username = document.cookie.split("=")[1];
+
+				$('#table').bootstrapTable({});
+				function doc(){
+					console.log('doc here');
+					 $('#table .personal1').show();
+					 $('#table .personal2').show();
+					 $('#table .personal3').hide();
+					 $('#table .billing1').hide();
+					 $('#table .billing2').hide();
+					 $('#table .medical1').show();
+					 $('#table .medical2').show();
+				}
+				function bill(){
+					console.log('in bill');
+					 $('#table .personal1').show();
+					 $('#table .personal2').show();
+					 $('#table .personal3').show();
+					 $('#table .billing1').show();
+					 $('#table .billing2').show();
+					 $('#table .medical1').show();
+					 $('#table .medical2').hide();
+				}
+				function intake(){
+					 $('#table .personal1').show();
+					 $('#table .personal2').show();
+					 $('#table .personal3').show();
+					 $('#table .billing1').show();
+					 $('#table .billing2').hide();
+					 $('#table .medical1').hide();
+					 $('#table .medical2').hide();
+				}
+				function janitor(){
+					 $('#table .personal1').show();
+					 $('#table .personal2').hide();
+					 $('#table .personal3').hide();
+					 $('#table .billing1').hide();
+					 $('#table .billing2').hide();
+					 $('#table .medical1').hide();
+					 $('#table .medical2').hide();
+
+				}
+				function load(){
+					 $('#table').bootstrapTable("load",$scope.user_data);
+					 switch($scope.username){
+	 					case 'Dana':
+	 						doc();
+	 						break;
+	 					case 'William':
+	 						bill();
+	 						break;
+						case 'Inigo':
+							intake();
+							break;
+						case 'Janet':
+							janitor();
+							break;
+	 					default:
+	 						break;
+	 				}
+					 // console.log($scope.user_data);
+					 // console.log('here');
+				}
+			 $(document).ready(load());
 			}
 		});
 
-
 		function validate_session(callback) {
-			$http.get('http://ec2-18-220-239-17.us-east-2.compute.amazonaws.com:5000/api/session/validate')
+			$http.post('/api/session/validate/')
 				.success(function(data, status, headers, config) {
+					// console.log('in update_session');
+					// console.log(data);
 					callback(true, data);
 				})
 			.error(function(data, status, headers, config) {

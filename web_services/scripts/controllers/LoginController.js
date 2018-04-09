@@ -7,7 +7,7 @@
 		console.log('in login controller');
 		/* If the user is signed in, redirect them to /home */
 		$scope.formData = {
-			'email': null,
+			'username': null,
 			'password': null,
 		};
 

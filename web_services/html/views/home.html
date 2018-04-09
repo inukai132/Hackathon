@@ -42,14 +42,32 @@
 	.tile{
 		cursor: pointer
 	}
-</style>
+
+	.fixed-table-loading{
+		display: none;
+	}
+</style>=
 </head>
 <body>
 	<div class="container-fluid text-center">
-		
+		<h1>Welcome, {{username}}</h1>
+		<button type="button" name="button" class="btn btn-danger" onclick="window.location.replace('/')">Log Out</button>
+		<table class="table" id="table" data-toggle="table" data-response-handler="responseHandler">
+			 <thead>
+				  <tr>
+					   <th class="personal1" data-field="name">Name</th>
+					   <th class="personal2" data-field="dob">DOB</th>
+					   <th class="personal3" data-field="ssn">SSN</th>
+					   <th class="billing1" data-field="insurance_id">Insurance ID</th>
+					   <th class="billing2" data-field="credit_card">Credit Card #</th>
+					   <th class="medical2" data-field="diagnosis">Diagnoses</th>
+					   <th class="medical1" data-field="allergy">Allergies</th>
+				  </tr>
+			 </thead>
+		</table>
 	</div>
 	<footer class="container-fluid text-center">
-		<button type="button" name="button" class="btn btn-danger" ng-click="log_out()">Log Out</button>
+		<!-- <button type="button" name="button" class="btn btn-danger" ng-click="log_out()">Log Out</button> -->
 	</footer>
 </body>
 </html>

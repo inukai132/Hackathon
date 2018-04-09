@@ -3,7 +3,8 @@
 // Enable app-relative includes (https://gist.github.com/branneman/8048520)
 // Note: use require.main.require('file/path') for app-relative includes
 
-const https = require('https');
+var fs = require("fs");
+var cookieParser = require('cookie-parser')
 
 const express = require('express');
 const morgan = require('morgan');
@@ -37,6 +38,8 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+app.use(cookieParser());
+
 // Specifies what folders have static files the server must read
 app.use(express.static('images'));
 app.use(express.static('scripts'));
@@ -47,15 +50,14 @@ app.use(express.static('services'));
 app.use(express.static('node_modules'));
 
 app.post('/api/user/login/',(req,res)=>{
-	// res.status(200).json({shit:"good"});
-	let url = 'localhost:5000/api/user/login/';
-	request.get(url, (error, response, body) => {
-		if(error){
-			res.status(500).send();
-		} else {
-			res.status(200).json(JSON.parse(body));
-		}
-	});
+	res.cookie('username', req.body.username);
+	res.status(200).send();
+});
+
+app.post('/api/session/validate/',(req,res)=>{
+	console.log('\n\nValidating for user ' + req.cookies['username'] + '\n\n');
+	var patient_data = JSON.parse(fs.readFileSync("images/patient_data.json"));
+	res.status(200).json(patient_data);
 });
 
 // Tells the terminal the node has been created at a given port number

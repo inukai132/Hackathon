@@ -130,7 +130,7 @@ table {
 	background-color: white;
 	padding: 50px;
 	margin: 50px 50px 10px 10px;
-	border: black 1px solid;
+	/* border: black 1px solid; */
 }
 
 th {
