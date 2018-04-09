@@ -103,6 +103,7 @@ def login():
 @crossdomain(origin='*')
 @app.route('/api/session/validate')
 def validate():
+    print "DING"
     try:
         uid = request.cookies.get('userID')
         if uid is not None:
